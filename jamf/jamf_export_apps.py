@@ -96,7 +96,7 @@ def FetchAppInfo(jss_url, session, app_ids):
 
 
 # Function: WriteToCSV(apps_detailed, column_headers, filename)
-# Queries JAMF API for all Detailed App Info and compiles an array of specific data points.
+# Writes to CSV
 # Void Return
 
 def WriteToCSV(apps_detailed, column_headers, filename):
