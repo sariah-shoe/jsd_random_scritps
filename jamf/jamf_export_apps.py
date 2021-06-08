@@ -25,7 +25,7 @@ import argparse
 
 # ----------------------------------------------------------------------------------
 
-# Function:
+# Function: ParseArguments()
 # Creates a session with authentication credentials and requried headers.
 # Returns Session
 def ParseArguments():
