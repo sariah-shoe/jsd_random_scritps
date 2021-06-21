@@ -29,7 +29,7 @@ import argparse
 # Creates a session with authentication credentials and requried headers.
 # Returns Session
 def ParseArguments():
-    parser = argparse.ArgumentParser(description="Example usage: jamf_export_apps.py --url https://sub.jamfcloud.com --file export.csv --user testinguser --pass supersecret")
+    parser = argparse.ArgumentParser(description="Example usage: jamf_export_config_profiles.py --url https://sub.jamfcloud.com --file export.csv --user testinguser --pass supersecret")
     parser.add_argument('--url', dest='jssurl', type=str, help='Your JAMF URL. (Must include https://) Example: https://sub.jamfcloud.com', required=True)
     parser.add_argument('--file', dest='filename', type=str, help='The filename you would like to save the export as.', required=True)
     parser.add_argument('--user', dest='username', type=str, help='Your JAMF username.', required=True)
@@ -52,8 +52,8 @@ def CreateSession(username, password):
 
 
 # Function: FetchIDS(jss_url, session)
-# Queries JAMF API for all Mobile Apps and extracts their app ids into an array.
-# Returns app_ids array
+# Queries JAMF API for all Mobile Config Profiles and extracts their config ids into an array.
+# Returns conf_ids array
 
 def FetchIDS(jss_url, session):
     conf_ids = []
@@ -66,9 +66,9 @@ def FetchIDS(jss_url, session):
         conf_ids.append(current_config['id'])
     return conf_ids
 
-# Function: FetchAppInfo(jss_url, session, app_ids)
-# Queries JAMF API for all Detailed App Info and compiles an array of specific data points.
-# Returns apps_detailed array
+# Function: FetchConfInfo(jss_url, session, conf_ids)
+# Queries JAMF API for all Detailed Mobile Config Info and compiles an array of specific data points.
+# Returns conf_detailed array
 
 def FetchConfInfo(jss_url, session, conf_ids):
     conf_detailed = []
@@ -87,16 +87,16 @@ def FetchConfInfo(jss_url, session, conf_ids):
 
 
 
-# Function: WriteToCSV(apps_detailed, column_headers, filename)
+# Function: WriteToCSV(conf_detailed, column_headers, filename)
 # Writes to CSV
 # Void Return
 
-def WriteToCSV(apps_detailed, column_headers, filename):
+def WriteToCSV(conf_detailed, column_headers, filename):
     try:
         with open(filename, 'w', newline='') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=column_headers)
             writer.writeheader()
-            for data in apps_detailed:
+            for data in conf_detailed:
                 writer.writerow(data)
     except IOError:
         print("I/O Error")
